@@ -83,7 +83,7 @@
                                 <button class="btn btn-primary btn-rounded" type="submit" style="background-color: #6610F2;">Sign in</button>
                             </div>
                             <hr>
-                            <a class="link float-end" href="login.html">Already have an account? Click here to log in.</a>
+                            <a class="link float-end" href="{{ route('login') }}">Already have an account? Click here to log in.</a>
                         </form>
                         
   

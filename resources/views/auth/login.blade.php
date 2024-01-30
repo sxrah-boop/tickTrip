@@ -60,7 +60,10 @@
                             style="background-color: #6610F2;">Login</button>
                         </div>
                         <hr>
-                        <a class="link float-end" href="">Forgot password? Click here.</a>
+                        <div class="row justify-content-between" > <a class="link float-end text-secondary col" href="">Forgot password? Click here.</a>
+                        <br>
+                        <a class="d-flex link float-end col " href="{{ route('registration') }}">Don't have an account? Sign up Now</a></div>
+                     
                       </form>
 
 

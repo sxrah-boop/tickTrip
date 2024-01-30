@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\customAuth;
-use  App\Http\Controllers\TripsController;
+use  App\Http\Controllers\ProfileController;use  App\Http\Controllers\TripsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +19,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/login', [customAuth::class, 'login'])->name('login'); // Show login form
+
 Route::post('/login-user', [customAuth::class, 'loginUser'])->name('login-user'); // Process login
 
 
-Route::get('/registration',[customAuth::class,'register']);
+Route::get('/registration',[customAuth::class,'register'])->name('registration'); //Show registration form
 Route::post('/register-user',[customAuth::class,'registerUser'])->name('register-user');
 
 // the protected routes using auth
@@ -40,6 +41,9 @@ Route::put('/update-trip/{id}', [TripsController::class, 'update'])->name('updat
 
 
 Route::get('/home', [customAuth::class, 'homePage'])->name('home');
+
+// Display the user's profile
+Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile.showProfile');
 
 // Redirect the root URL to the '/home' route
 Route::redirect('/', '/home');
