@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\customAuth;
+use  App\Http\Controllers\TripsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,20 @@ Route::post('/login-user', [customAuth::class, 'loginUser'])->name('login-user')
 
 Route::get('/registration',[customAuth::class,'register']);
 Route::post('/register-user',[customAuth::class,'registerUser'])->name('register-user');
+
+// the protected routes using auth
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/create-trip',[TripsController::class,'create']);
+    Route::post('/store-trip',[TripsController::class,'store'])->name('store-trip');
+});
+
+Route::get('/create-trip',[TripsController::class,'create']);
+Route::post('/store-trip',[TripsController::class,'store'])->name('store-trip');
+
+Route::get('/edit-trip/{id}', [TripsController::class, 'edit'])->name('edit-trip');
+Route::put('/update-trip/{id}', [TripsController::class, 'update'])->name('update-trip');
+
+
 
 Route::get('/home', [customAuth::class, 'homePage'])->name('home');
 
