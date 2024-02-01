@@ -69,7 +69,7 @@
                             </li>
                         </ul>
                     </div>
-                    <a href="" class="btn btn-primary  d-none d-md-block me-2">
+                    <a href="{{ route('create-trip') }}" class="btn btn-primary  d-none d-md-block me-2">
 
                         <img class="mx-1" src="images/navbar/components/icon-wrapper-h.svg" alt="add icon" height="16"
                             width="16">
@@ -127,3 +127,6 @@
             </div>
         </div>
     </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>   
