@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class TripsController extends Controller
 {
-   
+
     public function index()
     {
         return view('trips.index');
@@ -21,6 +21,7 @@ class TripsController extends Controller
     {
         return view('trips.create');
     }
+
     public function store(Request $request)
     {
         $user = auth()->user();
