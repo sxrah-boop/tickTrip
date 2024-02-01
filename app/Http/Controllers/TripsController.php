@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 
 class TripsController extends Controller
 {
+   
     public function index()
     {
         return view('trips.index');
@@ -22,7 +23,7 @@ class TripsController extends Controller
     }
     public function store(Request $request)
     {
-        $user_id = $request->session()->get('loginId');
+        $user = auth()->user();
         $validator = Validator::make($request->all(), [
             'depart' => 'required',
             'destination' => 'required',
@@ -58,7 +59,7 @@ class TripsController extends Controller
         $trip->places_disponibles = $request->places_disponibles;
         $trip->place_reserve = 0;
         $trip->prix = $request->prix;
-        $trip->user_id = $user_id;
+        $trip->user_id = $user->id;
         $trip->save();
 
         return redirect()->route('home')
