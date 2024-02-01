@@ -1,62 +1,61 @@
-
 @include('includes.header')
-    <!-- main section -->
-    <section class="container-fluid px-2 pt-1" style="width: 95%;">
+<!-- main section -->
+<section class="container-fluid px-2 pt-1" style="width: 95%;">
 
-        <div class=" py-4 rounded-2" style="background-color: #380094; padding-inline: 8rem;">
-            <!-- hero title -->
-            <div class="text-center text-light" style="margin-top: 2rem;margin-bottom: 4rem;">
-                <img class="mb-4" src="images/chba7/OBJECTS.png" alt="" height="220" width="220">
-                <h1 class=" display-">Covoiturage au meilleur prix</h1>
-                <p>Covoiturez vers des milliers de destinations à petits prix.</p>
-            </div>
-            <!-- search bar-->
-            <div class="mt-4 bg-light " style="margin-bottom: 6rem;">
-                <form class="row g-3 bg-light pb-4 rounded-2 px-3">
-                    <div class="col-md-3">
-                        <label for="inputLocation" class="form-label">De</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="inputLocation" placeholder="Location"
-                                aria-label="Départ">
-                        </div>
+    <div class=" py-4 rounded-5" style="background-color: #380094; padding-inline: 8rem;">
+        <!-- hero title -->
+        <div class="text-center text-light" style="margin-top: 2rem;margin-bottom: 4rem;">
+            <img class="mb-4" src="images/chba7/OBJECTS.png" alt="" height="220" width="220">
+            <h1 class=" display-">Covoiturage au meilleur prix</h1>
+            <p>Covoiturez vers des milliers de destinations à petits prix.</p>
+        </div>
+        <!-- search bar-->
+        <div class="mt-4 bg-light " style="margin-bottom: 4rem;">
+            <form class="row g-3 bg-light pb-4 rounded-2 px-3">
+                <div class="col-md-3">
+                    <label for="inputLocation" class="form-label">De</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="inputLocation" placeholder="Location"
+                            aria-label="Départ">
                     </div>
-                    <div class="col-md-3">
-                        <label for="inputDestination" class="form-label">
-                            à</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="inputDestination" placeholder="Destination"
-                                aria-label="Destination">
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="inputDate" class="form-label">Date</label>
-                        <input type="datetime-local" class="form-control" id="inputDate">
-                    </div>
-                    <div class="col-md-2">
-                        <label for="inputPassengers" class="form-label"> Passengers</label>
-                        <input type="number" class="form-control" id="inputPassengers" placeholder="1"
-                            aria-label="Number of passengers">
-                    </div>
-                    <div class="col-md-2 pt-2">
-                        <label class="invisible">Search</label>
-                        <button type="submit" class="btn btn-primary form-control"><i class="bi bi-search"></i>
-                            Search</button>
-                    </div>
-                </form>
-
-            </div>
-            <!-- trajets a proximités -->
-            <div class="my-4">
-                <h5 class="text-left text-light mb-3">Trajets à proximité</h5>
-                <div class="d-flex justify-content-between gap-2" id="trip-cards-container">
-
-
                 </div>
-            </div>
+                <div class="col-md-3">
+                    <label for="inputDestination" class="form-label">
+                        à</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="inputDestination" placeholder="Destination"
+                            aria-label="Destination">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label for="inputDate" class="form-label">Date</label>
+                    <input type="datetime-local" class="form-control" id="inputDate">
+                </div>
+                <div class="col-md-2">
+                    <label for="inputPassengers" class="form-label"> Passengers</label>
+                    <input type="number" class="form-control" id="inputPassengers" placeholder="1"
+                        aria-label="Number of passengers">
+                </div>
+                <div class="col-md-2 pt-2">
+                    <label class="invisible">Search</label>
+                    <button type="submit" class="btn btn-primary form-control"><i class="bi bi-search"></i>
+                        Search</button>
+                </div>
+            </form>
 
         </div>
+        <!-- trajets a proximités -->
+        <div class="my-4">
+            <h5 class="text-left text-light mb-3">Trajets à proximité</h5>
+            <div class="d-flex justify-content-between gap-2" id="trip-cards-container">
 
-    </section>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
 
 @include('includes.footer')
 </body>
@@ -103,6 +102,31 @@
         });
     }
 
+    function displayLoaderCards() {
+        var tripCardsContainer = $("#trip-cards-container");
+        tripCardsContainer.empty(); // Clear existing trip cards
+
+        // Create loader cards
+        for (var i = 0; i < 3; i++) {
+            var loaderCardHtml = `
+            <div class="card px-4 py-3 shadow flex-fill d-flex flex-row gap-3">
+                <div class="spinner-grow spinner-grow-sm text-secondary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow spinner-grow-sm text-secondary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow spinner-grow-sm text-secondary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        `;
+            tripCardsContainer.append(loaderCardHtml); // Append loader card to container
+        }
+    }
+
+    displayLoaderCards();
+
     // Function to display closest trips
     function displayClosestTrips(trips) {
         var tripCardsContainer = $("#trip-cards-container");
@@ -147,4 +171,3 @@
         });
     }
 </script>
-
