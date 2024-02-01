@@ -1,29 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+@include('includes.header')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <title>Create trip</title>
-</head>
-
-<body>
     <section class="intro">
         <div class="bg-image h-100">
             <div class="mask d-flex align-items-center h-100" style="background-color: #f3f2f2;">
-                <div class="container">
-                    <div class="row d-flex justify-content-center align-items-center">
-                        <div class="col-12 col-lg-9 col-xl-8">
-                            <div class="card" style="border-radius: 1rem;">
-                                <div class="row g-0">
-                                    <div class="col-md-4 d-none d-md-block">
-                                        <img src="{{ asset('images/login.png') }}" alt="login form" class="img-fluid"
-                                            style="border-top-left-radius: 1rem; border-bottom-left-radius: 1rem;height: 100%;" />
-                                    </div>
-                                    <div class="col-md-8 d-flex align-items-center">
+                <div class="container d-flex align-items-center justify-content-center ">
+                            <div class="card" style="border-radius: 1rem; max-width:700px">
                                         <div class="card-body py-5 px-4 p-md-5">
 
                                             <form action="{{ route('store-trip') }}" method="POST">
@@ -33,7 +14,7 @@
                                                         {{ Session::get('fail') }}
                                                     </div>
                                                 @endif
-                                                <h4 class="fw-bold mb-4" style="color: #6610F2;">Proposer un Trajet
+                                                <h4 class="fw-bold mb-4" style="color:black;">Proposer un Trajet
                                                 </h4>
                                                 <p class="mb-4">To login, please fill in these text fields with your
                                                     e-mail address and
@@ -97,13 +78,8 @@
                                                 <hr>
                                             </form>
 
-
                                         </div>
-                                    </div>
-                                </div>
                             </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
