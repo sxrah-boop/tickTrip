@@ -52,6 +52,7 @@ class customAuth extends Controller
         ]);
 
         return redirect()->route('home');
+        
     }
 
     public function HomePage()

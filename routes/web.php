@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\customAuth;
-use  App\Http\Controllers\ProfileController;use  App\Http\Controllers\TripsController;
-
+use  App\Http\Controllers\ProfileController;
+use  App\Http\Controllers\TripsController;
+use App\Http\Controllers\ReservationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,3 +48,9 @@ Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile
 
 // Redirect the root URL to the '/home' route
 Route::redirect('/', '/home');
+
+//reservation
+
+Route::post('/reserver/{tripId}', [ReservationController::class, 'reserver'])->middleware('auth')->name('reserver');
+
+

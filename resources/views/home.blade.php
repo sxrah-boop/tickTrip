@@ -98,14 +98,32 @@
                                         <div class="d-flex align-items-center">
                                             <i class="bi bi-people-fill me-2"></i>
                                             2
-                                        </div>
-                                        <a href="#" class="d-flex align-items-center text-decoration-none"
-                                            style="color: #380094;">
-                                            Reserver
-                                            <i class="bi bi-arrow-right ms-2"></i>
-                                        </a>
+                                       </div>
+
+                                       
+
                                     </div>
-                                </div>
+        
+
+                                    @if(session('message'))
+                                        <div class="alert alert-info">
+                                                    {{ session('message') }}
+                                                          </div>
+                                                            @endif
+
+
+         <div>
+    
+         <form method="post" action="{{ route('reserver', ['tripId' => $trip->id]) }}">
+        @csrf
+        <button type="submit" class="btn btn-link text-decoration-none" style="color: #380094; cursor: pointer;">
+            Réserver
+            <i class="bi bi-arrow-right ms-2"></i>
+        </button>
+    </form>
+    
+        </div>
+</div>
                                 <div class="card col-md-5 px-4 py-3 shadow me-4">
                                     <!-- Card header -->
                                     <div class=""> <img src="images/voiture-rounded.png" alt="car" height="50"
@@ -137,11 +155,16 @@
                                             <i class="bi bi-people-fill me-2"></i>
                                             2
                                         </div>
-                                        <a href="#" class="d-flex align-items-center text-decoration-none"
-                                            style="color: #380094;">
-                                            Reserver
-                                            <i class="bi bi-arrow-right ms-2"></i>
-                                        </a>
+                                      
+                                        <div>
+  
+        
+        <button type="submit" class="btn btn-link text-decoration-none" style="color: #380094; cursor: pointer;">
+            Réserver
+            <i class="bi bi-arrow-right ms-2"></i>
+        </button>
+
+</div>
                                     </div>
                                 </div>
                             </div>
