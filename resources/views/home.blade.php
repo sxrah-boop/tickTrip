@@ -163,10 +163,14 @@
                         <div class="d-flex align-items-center">
                             <i class="bi bi-people-fill me-2"></i> ${trip.trip.places_disponibles}
                         </div>
-
+                        
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal ${trip.trip.id}"> Reserver
+                     </button>
+   
 
                     </div>
                 </div>
+                
             `;
             tripCardsContainer.append(cardHtml); // Append trip card to container
         });
