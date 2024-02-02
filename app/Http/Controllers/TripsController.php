@@ -176,7 +176,7 @@ class TripsController extends Controller
             $destination = $request->input('destination');
             $datetime = $request->input('datetime');
             $places_disponibles = $request->input('places_disponibles');
-    
+
             // Mettez en œuvre la logique de recherche ici, par exemple :
             $trips = Trip::where('depart', 'like', "%$depart%")
                      ->where('destination', 'like', "%$destination%")
@@ -197,13 +197,13 @@ class TripsController extends Controller
                 ->where('date', '=', $date)
                 ->where('places_disponibles', '>=', $places_disponibles)
                 ->get();*/
-            
+
             // Vérifiez s'il y a des résultats
             if ($trips->isEmpty()) {
                 // Aucun résultat trouvé, redirigez ou affichez un message
                 return redirect()->route('home')->with('warning', 'Aucun trajet trouvé.');
             }
-    
+
             // Passez les résultats à la vue de résultats de recherche
             return view('trips.search-results', compact('trips'));
         }

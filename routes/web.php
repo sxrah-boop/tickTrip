@@ -47,6 +47,7 @@ Route::put('/update-trip/{id}', [TripsController::class, 'update'])->name('updat
 Route::post('/find-closest-trips', [TripsController::class, 'findClosestTrips'])->name('find-closest-trips');
 
 
+Route::get('/search-trip', [TripsController::class, 'search'])->name('search-trip');
 
 Route::get('/home', [customAuth::class, 'homePage'])->name('home');
 
