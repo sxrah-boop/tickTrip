@@ -11,7 +11,7 @@
         </div>
         <!-- search bar-->
         <div class="mt-4 bg-light " style="margin-bottom: 4rem;">
-            <form class="row g-3 bg-light pb-4 rounded-2 px-3" method="POST" action="{{ route('search-trips') }}">
+            <form class="row g-3 bg-light pb-4 rounded-2 px-3" method="POST" action="{{ route('search-trip') }}">
                 <div class="col-md-3">
                     <label for="inputLocation" class="form-label">From</label>
                     <div class="input-group">

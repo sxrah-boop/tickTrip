@@ -1,59 +1,78 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use  App\Http\Controllers\customAuth;
-use  App\Http\Controllers\ProfileController;
-use  App\Http\Controllers\TripsController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TripsController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UsersTableController;
+use App\Http\Controllers\customAuth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| Register web routes for the application. These routes are loaded by
+| the RouteServiceProvider and assigned to the "web" middleware group.
 |
 */
 
+// Welcome Page
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Authentication Routes
 Route::get('/login', [customAuth::class, 'login'])->name('login'); // Show login form
 Route::post('/login-user', [customAuth::class, 'loginUser'])->name('login-user'); // Process login
 
-Route::get('/registration', [customAuth::class, 'register'])->name('registration'); //Show registration form
+Route::get('/registration', [customAuth::class, 'register'])->name('registration'); // Show registration form
 Route::post('/register-user', [customAuth::class, 'registerUser'])->name('register-user');
 
-// the protected routes using auth
+// logout 
+Route::get('/logout', [customAuth::class, 'logout'])->name('logout');
+
+// Home Page
+Route::get('/home', [customAuth::class, 'homePage'])->name('home');
+
+// Protected Routes using auth middleware
 Route::group(['middleware' => ['auth']], function () {
+    // Trips Routes
     Route::get('/create-trip', [TripsController::class, 'create']);
     Route::post('/store-trip', [TripsController::class, 'store'])->name('store-trip');
     Route::get('/home', [customAuth::class, 'homePage'])->name('home');
 });
 
+// Trips Routes (outside auth middleware)
 Route::get('/create-trip', [TripsController::class, 'create'])->name('create-trip');
 Route::post('/store-trip', [TripsController::class, 'store'])->name('store-trip');
-
 Route::get('/edit-trip/{id}', [TripsController::class, 'edit'])->name('edit-trip');
 Route::put('/update-trip/{id}', [TripsController::class, 'update'])->name('update-trip');
-
 Route::post('/find-closest-trips', [TripsController::class, 'findClosestTrips'])->name('find-closest-trips');
-
-
 Route::get('/search-trip', [TripsController::class, 'search'])->name('search-trip');
 
-Route::get('/home', [customAuth::class, 'homePage'])->name('home');
+// Dashboard Routes - only admin
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/trips', [TripsController::class, 'index'])->name('dashboard.trips');
+    Route::get('/dashboard/reservations', [TripsController::class, 'index'])->name('dashboard.reservations');
+    Route::get('/dashboard/users', [UsersTableController::class, 'index'])->name('dashboard.users');
+    Route::delete('/dashboard/users/{userId}/delete', [UsersTableController::class, 'deleteUser'])->name('dashboard.users.delete');
+});
 
-// Display the user's profile
+// User Profile Route
 Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile.showProfile');
 
-// Redirect the root URL to the '/home' route
+// Root URL Redirect to Home
 Route::redirect('/', '/home');
 
-//reservation
-
+// Reservation Routes
 Route::post('/reserver/{tripId}', [ReservationController::class, 'reserver'])->middleware('auth')->name('reserver');
 
 
+
+
+
+// Root URL Redirect to Home
+Route::redirect('/', '/home');
