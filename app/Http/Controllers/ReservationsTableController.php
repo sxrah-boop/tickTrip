@@ -12,3 +12,4 @@ class ReservationsTableController extends Controller
         return view('admin.dashboard.reservations', ['activeTab' => 'users']);
     }
 }
+

@@ -188,7 +188,7 @@
                     <label for="inputLocation" class="form-label">From</label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="inputLocation" placeholder="Location"
-                            aria-label="Départ"  name="depart">
+                            aria-label="Départ" name="depart">
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -196,12 +196,12 @@
                         to</label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="inputDestination" placeholder="Destination"
-                            aria-label="Destination"  name="destination">
+                            aria-label="Destination" name="destination">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <label for="inputDate" class="form-label">Date</label>
-                    <input type="datetime-local" class="form-control" id="inputDate"  name="datetime">
+                    <input type="datetime-local" class="form-control" id="inputDate" name="datetime">
                 </div>
                 <div class="col-md-2">
                     <label for="inputPassengers" class="form-label"> Passengers</label>
@@ -234,11 +234,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-</script>
+    </script>
 <script>
     // Get user's location
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
+        navigator.geolocation.getCurrentPosition(function (position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
             console.log(latitude, longitude);
@@ -257,13 +257,13 @@
                     latitude: latitude,
                     longitude: longitude
                 },
-                success: function(response) {
+                success: function (response) {
 
                     // Handle response (display closest trips)
                     console.log('Response from server:', response);
                     displayClosestTrips(response);
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error('Error occurred while sending the request:');
                     console.log('Error:', error);
                     console.log('Status:', status);
@@ -307,7 +307,7 @@
 
         // Loop through fetched trips and create HTML for each trip card
 
-        trips.forEach(function(trip) {
+        trips.forEach(function (trip) {
             let tripDate = new Date(trip.trip.heure_depart);
             // Format date and time separately
             let formattedDate = tripDate.toLocaleDateString(); // Format date
@@ -335,7 +335,8 @@
                         <div class="d-flex align-items-center">
                             <i class="bi bi-people-fill me-2"></i> ${trip.trip.places_disponibles}
                         </div>
-                        <a href="#" class="d-flex align-items-center text-decoration-none" style="color: #380094;">Reserver<i class="bi bi-arrow-right ms-2"></i></a>
+
+
                     </div>
                 </div>
             `;
