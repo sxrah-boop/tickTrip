@@ -80,17 +80,23 @@
                     <!-- If the user is authenticated, show profile image and name -->
 
                     <div class="dropdown">
-    <a href="#" class="ms-2 me-2 d-flex align-items-center text-decoration-none text-dark dropdown-toggle" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <img class="rounded-circle me-2" src="images/navbar/profile.svg" alt="Profile Image" height="38" width="38">
-        <span>{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-        <li><a class="dropdown-item" href="{{ route('profile.showProfile') }}">My Profile</a></li>
-        <li><a class="dropdown-item" href="#">My Reservations</a></li>
-        <div class="dropdown-divider"></div>
-        <li><a class="dropdown-item" href="">Logout</a></li>
-    </ul>
-</div>
+                        <a href="#"
+                            class="ms-2 me-2 d-flex align-items-center text-decoration-none text-dark dropdown-toggle"
+                            id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="rounded-circle me-2" src="images/navbar/profile.svg" alt="Profile Image"
+                                height="38" width="38">
+                            <span>{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item" href="{{ route('profile.showProfile') }}">My Profile</a></li>
+                            <li><a class="dropdown-item" href="#">My Reservations</a></li>
+                            @if(Auth::user()->role_id == 1) 
+            <li><a class="dropdown-item" href="{{ route('dashboard') }}">Admin Dashboard</a></li>
+        @endif
+                            <div class="dropdown-divider"></div>
+                            <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+                        </ul>
+                    </div>
 
 
 

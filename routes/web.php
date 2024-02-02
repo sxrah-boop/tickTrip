@@ -4,6 +4,13 @@ use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\customAuth;
 use  App\Http\Controllers\ProfileController;
 use  App\Http\Controllers\TripsController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UsersTableController;
+use App\Http\Controllers\TripsTableController;
+use App\Http\Controllers\ReservationsTableController;
+
+use  App\Http\Controllers\ProfileController;
+use  App\Http\Controllers\TripsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +57,22 @@ Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile
 
 // Redirect the root URL to the '/home' route
 Route::redirect('/', '/home');
+
+// logout
+Route::get('/logout', [customAuth::class, 'logout'])->name('logout');
+
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
+
+// Route for the main dashboard
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+// Routes for each section
+Route::get('/dashboard/users', [UsersTableController::class, 'index'])->name('dashboard.users');
+Route::get('/dashboard/trips', [TripsTableController::class, 'index'])->name('dashboard.trips');
+Route::get('/dashboard/reservations', [ReservationsTableController::class, 'index'])->name('dashboard.reservations');
 
 //
 Route::get('/search-trips', [TripsController::class, 'search'])->name('search-trips');
