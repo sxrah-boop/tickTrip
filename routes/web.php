@@ -9,8 +9,6 @@ use App\Http\Controllers\UsersTableController;
 use App\Http\Controllers\TripsTableController;
 use App\Http\Controllers\ReservationsTableController;
 
-use  App\Http\Controllers\ProfileController;
-use  App\Http\Controllers\TripsController;
 
 /*
 |--------------------------------------------------------------------------
