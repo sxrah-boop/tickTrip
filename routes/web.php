@@ -33,11 +33,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/store-trip',[TripsController::class,'store'])->name('store-trip');
 });
 
-Route::get('/create-trip',[TripsController::class,'create']);
+Route::get('/create-trip',[TripsController::class,'create'])->name('create-trip');
 Route::post('/store-trip',[TripsController::class,'store'])->name('store-trip');
 
 Route::get('/edit-trip/{id}', [TripsController::class, 'edit'])->name('edit-trip');
 Route::put('/update-trip/{id}', [TripsController::class, 'update'])->name('update-trip');
+
+Route::post('/find-closest-trips', [TripsController::class, 'findClosestTrips'])->name('find-closest-trips');
 
 
 

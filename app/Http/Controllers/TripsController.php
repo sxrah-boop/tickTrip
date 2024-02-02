@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 
 class TripsController extends Controller
 {
+
     public function index()
     {
         return view('trips.index');
@@ -20,9 +21,10 @@ class TripsController extends Controller
     {
         return view('trips.create');
     }
+
     public function store(Request $request)
     {
-        $user_id = $request->session()->get('loginId');
+        $user = auth()->user();
         $validator = Validator::make($request->all(), [
             'depart' => 'required',
             'destination' => 'required',
@@ -58,7 +60,7 @@ class TripsController extends Controller
         $trip->places_disponibles = $request->places_disponibles;
         $trip->place_reserve = 0;
         $trip->prix = $request->prix;
-        $trip->user_id = $user_id;
+        $trip->user_id = $user->id;
         $trip->save();
 
         return redirect()->route('home')
@@ -115,7 +117,56 @@ class TripsController extends Controller
 
         return redirect()->route('home')
             ->with('success', 'Trip updated successfully.');
+    }
+
+    public function findClosestTrips(Request $request)
+    {
+        $latitude = $request->latitude;
+        $longitude = $request->longitude;
+
+        // Get all trips from the database
+        $trips = Trip::all();
+
+        // Calculate distance between user's location and each trip's location
+        $tripsWithDistance = [];
+        foreach ($trips as $trip) {
+            $distance = $this->calculateDistance(
+                $latitude,
+                $longitude,
+                $trip->latitude,
+                $trip->longitude
+            );
+            $tripsWithDistance[] = [
+                'trip' => $trip,
+                'distance' => $distance,
+            ];
         }
+
+        // Sort trips by distance
+        usort($tripsWithDistance, function ($a, $b) {
+            return $a['distance'] <=> $b['distance'];
+        });
+
+        // Display three closest trips to the user
+        $closestTrips = array_slice($tripsWithDistance, 0, 3);
+
+        return response()->json($closestTrips);
+
+    }
+
+    private function calculateDistance($lat1, $lon1, $lat2, $lon2)
+    {
+            // Haversine formula to calculate distance between two points
+            $earthRadius = 6371; // Earth's radius in kilometers
+            $deltaLat = deg2rad($lat2 - $lat1);
+            $deltaLon = deg2rad($lon2 - $lon1);
+            $a = sin($deltaLat / 2) * sin($deltaLat / 2) +
+                cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
+                sin($deltaLon / 2) * sin($deltaLon / 2);
+            $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+            $distance = $earthRadius * $c;
+            return $distance;
+    }
 
 
         public function search(Request $request)
