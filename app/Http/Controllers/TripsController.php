@@ -118,4 +118,44 @@ class TripsController extends Controller
         }
 
 
+        public function search(Request $request)
+        {
+            // Récupérez les données de recherche depuis la requête
+            $depart = $request->input('depart');
+            $destination = $request->input('destination');
+            $datetime = $request->input('datetime');
+            $places_disponibles = $request->input('places_disponibles');
+    
+            // Mettez en œuvre la logique de recherche ici, par exemple :
+            $trips = Trip::where('depart', 'like', "%$depart%")
+                     ->where('destination', 'like', "%$destination%")
+                     ->where('heure_depart', '=', $datetime);
+
+                   // if ($datetime) {
+                                // $trips->where('datetime', '=', $datetime);
+                                //}
+
+                    if ($places_disponibles) {
+                         $trips->where('places_disponibles', '>=', $places_disponibles);
+                    }
+
+            $trips = $trips->get();
+
+            /*$trips = Trip::where('depart', 'like', "%$depart%")
+                ->where('destination', 'like', "%$destination%")
+                ->where('date', '=', $date)
+                ->where('places_disponibles', '>=', $places_disponibles)
+                ->get();*/
+            
+            // Vérifiez s'il y a des résultats
+            if ($trips->isEmpty()) {
+                // Aucun résultat trouvé, redirigez ou affichez un message
+                return redirect()->route('home')->with('warning', 'Aucun trajet trouvé.');
+            }
+    
+            // Passez les résultats à la vue de résultats de recherche
+            return view('trips.search-results', compact('trips'));
+        }
+
+
 }

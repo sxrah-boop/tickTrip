@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('latitude');
             $table->string('longitude');
             $table->string('destination');
-            $table->dateTime('heure_depart');
+            $table->datetime('heure_depart');
             $table->integer('places_disponibles');
             $table->string('prix');
             $table->integer('place_reserve');

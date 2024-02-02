@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\customAuth;
-use  App\Http\Controllers\ProfileController;use  App\Http\Controllers\TripsController;
+use  App\Http\Controllers\ProfileController;
+use  App\Http\Controllers\TripsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,3 +48,6 @@ Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile
 
 // Redirect the root URL to the '/home' route
 Route::redirect('/', '/home');
+
+//
+Route::get('/search-trips', [TripsController::class, 'search'])->name('search-trips');

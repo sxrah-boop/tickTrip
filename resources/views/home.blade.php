@@ -12,12 +12,12 @@
             </div>
             <!-- search bar-->
             <div class="mt-4 bg-light " style="margin-bottom: 6rem;">
-                <form class="row g-3 bg-light pb-4 rounded-2 px-3">
+                <form class="row g-3 bg-light pb-4 rounded-2 px-3" method="GET" action="{{ route('search-trips') }}">
                     <div class="col-md-3">
                         <label for="inputLocation" class="form-label">From</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="inputLocation" placeholder="Location"
-                                aria-label="Départ">
+                                aria-label="Départ" name="depart">
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -25,17 +25,17 @@
                             to</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="inputDestination" placeholder="Destination"
-                                aria-label="Destination">
+                                aria-label="Destination" name="destination" >
                         </div>
                     </div>
                     <div class="col-md-2">
                         <label for="inputDate" class="form-label">Date</label>
-                        <input type="datetime-local" class="form-control" id="inputDate">
+                        <input type="datetime-local" class="form-control" id="inputDate" name="datetime">
                     </div>
                     <div class="col-md-2">
                         <label for="inputPassengers" class="form-label"> Passengers</label>
                         <input type="number" class="form-control" id="inputPassengers" placeholder="1"
-                            aria-label="Number of passengers">
+                            aria-label="Number of passengers" name="places_disponibles">
                     </div>
                     <div class="col-md-2 pt-2">
                         <label class="invisible">Search</label>
