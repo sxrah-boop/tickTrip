@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Dashboard</title>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="{{ asset('css/dashboardStyle.css') }}">
@@ -29,10 +31,18 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Datatables css -->
-    <link href="assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/vendor/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet"
-        type="text/css" />
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+
 
 </head>
 
@@ -62,7 +72,7 @@
                             <i class="fas fa-suitcase me-2"></i> Trips
                         </a>
                     </li>
-                    
+
                     <li>
                         <a href="{{ route('dashboard.reservations') }}">
                             <i class="fas fa-clock me-2"></i> Reservations
@@ -73,14 +83,14 @@
                             <i class="fas fa-cogs me-1"></i> Settings
                         </a>
                     </li>
-                    
+
                     <br>
                     <!-- Logout button -->
                     <li>
                         <a href="{{ route('logout') }}">
                             <i class="fas fa-sign-out-alt me-2"></i> Logout
                         </a>
-                        
+
                     </li>
                 </ul>
             </div>
@@ -93,67 +103,64 @@
     <div class="container col-md-10" style="float: right;padding:2rem;">
         <h1 class="text-center">Users View</h1>
         <BR></BR>
-        <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <table id="dtUsers" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
             <thead>
-              <tr>
-                <th class="th-sm">Name
-                </th>
-                <th class="th-sm">Position
-                </th>
-                <th class="th-sm">Office
-                </th>
-                <th class="th-sm">Age
-                </th>
-                <th class="th-sm">Start date
-                </th>
-                <th class="th-sm">Salary
-                </th>
-                <th class="th-sm">Actions</th>
-              </tr>
+                <tr>
+                    <th class="th-sm">ID</th>
+                    <th class="th-sm">Firstname</th>
+                    <th class="th-sm">Lastname</th>
+                    <th class="th-sm">Role</th>
+                    <th class="th-sm">Email</th>
+                    <th class="th-sm">Matricule</th>
+                    <th class="th-sm">Phone</th>
+                    <th class="th-sm">Actions</th>
+                </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$320,800</td>
-                <td>
-                    <!-- Edit and delete icons with data-toggle attributes for modals -->
-                    <a href="#" data-toggle="modal" data-target="#editModal">
-                        <i class="fas fa-edit me-2"></i>
-                    </a>
-                    <a href="#" data-toggle="modal" data-target="#deleteModal">
-                        <i class="fas fa-trash-alt"></i>
-                    </a>
-                </td>
-              </tr>
-              <tr>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>63</td>
-                <td>2011/07/25</td>
-                <td>$170,750</td>
-                <td>
-                    <!-- Edit and delete icons with data-toggle attributes for modals -->
-                    <a href="#" data-toggle="modal" data-target="#editModal">
-                        <i class="fas fa-edit me-2"></i>
-                    </a>
-
-                    <a href="#" data-toggle="modal" data-target="#deleteModal">
-                        <i class="fas fa-trash-alt"></i>
-                    </a>
-                </td>
-              </tr>
+                @foreach($users as $user)
+                <tr>
+                    <td>{{ $user->id }}</td>
+                    <td>{{ $user->firstname }}</td>
+                    <td>{{ $user->lastname }}</td>
+                    <td>{{ $user->role->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->matricule }}</td>
+                    <td>{{ $user->phone }}</td>
+                    <!-- Add other user details as needed -->
+                    <td>
+                        <!-- Edit and delete icons with data-toggle attributes for modals -->
+                        <a href="#" data-toggle="modal" data-target="#editModal{{ $user->id }}">
+                            <i class="fas fa-edit me-2"></i>
+                        </a>
+                        <a href="#" data-toggle="modal" data-target="#deleteModal{{ $user->id }}">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+                @endforeach
             </tbody>
-          </table> 
+        </table>
     </div>
     </div>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+
+<script>
+    $(document).ready(function () {
+        // DataTables initialization
+        var dataTable = $('#dtUsers').DataTable({
+            "paging": true,
+            "ordering": true,
+            "info": false,
+            "searching": true // Enable searching
+        });
+
+        // Apply search on input change
+        $('#search').on('keyup', function () {
+            dataTable.search(this.value).draw();
+        });
+    });
+</script>
 
 
 </html>
