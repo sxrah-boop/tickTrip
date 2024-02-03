@@ -74,6 +74,11 @@ class TripsController extends Controller
         return view('trips.update', compact('trip'));
     }
 
+    public function searchPage()
+    {
+        return view('trips.search');
+    }
+
 
     public function update(Request $request, $id)
     {
@@ -169,8 +174,8 @@ class TripsController extends Controller
     }
 
 
-        public function search(Request $request)
-        {
+    public function search(Request $request)
+    {
             // Récupérez les données de recherche depuis la requête
             $depart = $request->input('depart');
             $destination = $request->input('destination');
@@ -192,21 +197,16 @@ class TripsController extends Controller
 
             $trips = $trips->get();
 
-            /*$trips = Trip::where('depart', 'like', "%$depart%")
-                ->where('destination', 'like', "%$destination%")
-                ->where('date', '=', $date)
-                ->where('places_disponibles', '>=', $places_disponibles)
-                ->get();*/
-
-            // Vérifiez s'il y a des résultats
-            if ($trips->isEmpty()) {
-                // Aucun résultat trouvé, redirigez ou affichez un message
-                return redirect()->route('home')->with('warning', 'Aucun trajet trouvé.');
-            }
-
+            $searchData = [
+                'depart' => $depart,
+                'destination' => $destination,
+                'datetime' => $datetime,
+                'places_disponibles' => $places_disponibles,
+            ];
             // Passez les résultats à la vue de résultats de recherche
-            return view('trips.search-results', compact('trips'));
-        }
+            return view('trips.search-results', compact('trips'), compact('searchData'));
+    }
+
 
 
 }

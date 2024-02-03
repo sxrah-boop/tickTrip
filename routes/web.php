@@ -25,7 +25,7 @@ Route::post('/login-user', [customAuth::class, 'loginUser'])->name('login-user')
 Route::get('/registration', [customAuth::class, 'register'])->name('registration'); // Show registration form
 Route::post('/register-user', [customAuth::class, 'registerUser'])->name('register-user');
 
-// logout 
+// logout
 Route::get('/logout', [customAuth::class, 'logout'])->name('logout');
 
 
@@ -44,7 +44,7 @@ Route::post('/store-trip', [TripsController::class, 'store'])->name('store-trip'
 Route::get('/edit-trip/{id}', [TripsController::class, 'edit'])->name('edit-trip');
 Route::put('/update-trip/{id}', [TripsController::class, 'update'])->name('update-trip');
 Route::post('/find-closest-trips', [TripsController::class, 'findClosestTrips'])->name('find-closest-trips');
-Route::get('/search-trip', [TripsController::class, 'search'])->name('search-trip');
+Route::post('/search-trip', [TripsController::class, 'search'])->name('search-trip');
 
 // Dashboard Routes - only admin
 Route::middleware(['auth', 'admin'])->group(function () {
