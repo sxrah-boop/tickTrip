@@ -7,6 +7,8 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UsersTableController;
 use App\Http\Controllers\customAuth;
+use App\Http\Controllers\TripsTableController;
+use App\Http\Controllers\ReservationsTableController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,8 +51,8 @@ Route::post('/search-trip', [TripsController::class, 'search'])->name('search-tr
 // Dashboard Routes - only admin
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/dashboard/trips', [TripsController::class, 'index'])->name('dashboard.trips');
-    Route::get('/dashboard/reservations', [TripsController::class, 'index'])->name('dashboard.reservations');
+    Route::get('/dashboard/trips', [TripsTableController::class, 'index'])->name('dashboard.trips');
+    Route::get('/dashboard/reservations', [ReservationsTableController::class, 'index'])->name('dashboard.reservations');
     Route::get('/dashboard/users', [UsersTableController::class, 'index'])->name('dashboard.users');
     Route::delete('/dashboard/users/{userId}/delete', [UsersTableController::class, 'deleteUser'])->name('dashboard.users.delete');
 });
@@ -63,3 +65,6 @@ Route::redirect('/', '/home');
 
 // Reservation Routes
 Route::post('/reserver/{tripId}', [ReservationController::class, 'reserver'])->middleware('auth')->name('reserver');
+
+// update user
+Route::patch('/update-user/{userId}', [UsersTableController::class, 'updateUser'])->name('update-user');

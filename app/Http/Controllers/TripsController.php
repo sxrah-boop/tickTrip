@@ -16,6 +16,7 @@ class TripsController extends Controller
     {
         return view('trips.index');
     }
+    
 
     public function create()
     {
