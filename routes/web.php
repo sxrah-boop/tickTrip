@@ -18,11 +18,6 @@ use App\Http\Controllers\customAuth;
 |
 */
 
-// Welcome Page
-Route::get('/', function () {
-    return view('welcome');
-});
-
 // Authentication Routes
 Route::get('/login', [customAuth::class, 'login'])->name('login'); // Show login form
 Route::post('/login-user', [customAuth::class, 'loginUser'])->name('login-user'); // Process login
@@ -33,16 +28,15 @@ Route::post('/register-user', [customAuth::class, 'registerUser'])->name('regist
 // logout 
 Route::get('/logout', [customAuth::class, 'logout'])->name('logout');
 
-// Home Page
-Route::get('/home', [customAuth::class, 'homePage'])->name('home');
 
 // Protected Routes using auth middleware
 Route::group(['middleware' => ['auth']], function () {
     // Trips Routes
     Route::get('/create-trip', [TripsController::class, 'create']);
     Route::post('/store-trip', [TripsController::class, 'store'])->name('store-trip');
-    Route::get('/home', [customAuth::class, 'homePage'])->name('home');
 });
+// Home Page
+Route::get('/home', [customAuth::class, 'homePage'])->name('home');
 
 // Trips Routes (outside auth middleware)
 Route::get('/create-trip', [TripsController::class, 'create'])->name('create-trip');
@@ -69,10 +63,3 @@ Route::redirect('/', '/home');
 
 // Reservation Routes
 Route::post('/reserver/{tripId}', [ReservationController::class, 'reserver'])->middleware('auth')->name('reserver');
-
-
-
-
-
-// Root URL Redirect to Home
-Route::redirect('/', '/home');
