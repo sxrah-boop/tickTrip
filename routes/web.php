@@ -41,7 +41,7 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('/home', [customAuth::class, 'homePage'])->name('home');
 
 // Trips Routes (outside auth middleware)
-Route::get('/create-trip', [TripsController::class, 'create'])->name('create-trip');
+Route::get('/create-trip', [TripsController::class, 'create'])->name('create-trip')->middleware('auth');
 Route::post('/store-trip', [TripsController::class, 'store'])->name('store-trip');
 Route::get('/edit-trip/{id}', [TripsController::class, 'edit'])->name('edit-trip');
 Route::put('/update-trip/{id}', [TripsController::class, 'update'])->name('update-trip');
