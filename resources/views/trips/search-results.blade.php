@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <p class="text-secondary mb-0 pb-0"><span>{{ $trip->heure_depart }}</span> - <span>${formattedTime}</span></p>
-                    <p class="mt-0 pt-0 text-secondary text-nowrap"><img class="me-1" src="images/driver.svg" alt="driver icon" height="15" width="15">{{ $trip->prix }}</p>
+                    <p class="mt-0 pt-0 text-secondary text-nowrap"><img class="me-1" src="images/driver.svg" alt="driver icon" height="15" width="15">{{ $trip->prix }} DA</p>
                     <!-- Card footer -->
                     <div class=" d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">

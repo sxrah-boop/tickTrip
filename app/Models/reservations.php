@@ -12,9 +12,10 @@ class Reservation extends Model
     protected $fillable = [
         'user_id',
         'trip_id',
+        'places_reservees'
     ];
 
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);

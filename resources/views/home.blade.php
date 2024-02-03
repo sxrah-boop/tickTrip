@@ -57,17 +57,35 @@
     </div>
 
 </section>
+<div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reservationModalLabel">Combien de places voulez-vous réserver ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="number" id="placesInput" class="form-control" placeholder="Nombre de places"
+                    min="1">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-primary" id="reserveBtn" onclick="reserver()">Valider</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @include('includes.footer')
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
+</script>
 <script>
     // Get user's location
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
+        navigator.geolocation.getCurrentPosition(function(position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
             console.log(latitude, longitude);
@@ -86,13 +104,13 @@
                     latitude: latitude,
                     longitude: longitude
                 },
-                success: function (response) {
+                success: function(response) {
 
                     // Handle response (display closest trips)
                     console.log('Response from server:', response);
                     displayClosestTrips(response);
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     console.error('Error occurred while sending the request:');
                     console.log('Error:', error);
                     console.log('Status:', status);
@@ -136,7 +154,7 @@
 
         // Loop through fetched trips and create HTML for each trip card
 
-        trips.forEach(function (trip) {
+        trips.forEach(function(trip) {
             let tripDate = new Date(trip.trip.heure_depart);
             // Format date and time separately
             let formattedDate = tripDate.toLocaleDateString(); // Format date
@@ -158,15 +176,16 @@
                         </div>
                     </div>
                     <p class="text-secondary mb-0 pb-0"><span>${formattedDate}</span> - <span>${formattedTime}</span></p>
-                    <p class="mt-0 pt-0 text-secondary text-nowrap"><img class="me-1" src="images/driver.svg" alt="driver icon" height="15" width="15">${trip.trip.prix}</p>
+                    <p class="mt-0 pt-0 text-secondary text-nowrap"><img class="me-1" src="images/driver.svg" alt="driver icon" height="15" width="15">${trip.trip.prix} DA</p>
                     <!-- Card footer -->
                     <div class=" d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
                             <i class="bi bi-people-fill me-2"></i> ${trip.trip.places_disponibles}
                         </div>
 
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal ${trip.trip.id}"> Reserver
-                     </button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal" data-trip-id=${trip.trip.id}>
+                             Réserver
+                             </button>
 
 
                     </div>
@@ -175,4 +194,46 @@
             tripCardsContainer.append(cardHtml); // Append trip card to container
         });
     }
+
+    function reserver() {
+    var places = $('#placesInput').val(); // Get the number of places from the input field
+    var tripId = $('#reservationModal').data('trip-id'); // Get the trip ID from the modal data attribute
+
+    // Send a reservation request to the server
+    $.ajax({
+      url: '/reserver/' + tripId, // URL for the reservation endpoint
+      method: 'POST',
+      data: { places: places }, // Data to send in the request (number of places)
+      success: function(response) {
+        // Handle successful reservation
+        console.log('Reservation successful:', response);
+        $('#reservationMessages').html('<div class="alert alert-success" role="alert">Reservation successful!</div>');
+        $('#reservationModal').modal('hide'); // Hide the modal after successful reservation
+      },
+      error: function(xhr, status, error) {
+        // Handle reservation error
+        console.error('Error occurred during reservation:', error);
+        $('#reservationMessages').html('<div class="alert alert-danger" role="alert">Error occurred during reservation. Please try again later.</div>');
+      }
+    });
+  }
+
+    // Handle reservation modal
+    document.addEventListener('DOMContentLoaded', function () {
+    // When the modal is shown, update its title with the trip ID
+    $('#reservationModal').on('show.bs.modal', function (event) {
+      let button = $(event.relatedTarget); // Button that triggered the modal
+      let tripId = button.data('trip-id'); // Extract trip ID from data-* attributes
+      let modal = $(this);
+      modal.find('.modal-title').text('Combien de places voulez-vous réserver pour ce voyage ?');
+    });
+
+    // Handle reservation button click
+    $('#reserveBtn').on('click', function () {
+      var places = $('#placesInput').val(); // Get the number of places from the input field
+      console.log('Number of places reserved:', places);
+      // Here you can perform any further actions, such as sending a reservation request to the server
+      // Remember to close the modal if needed: $('#reservationModal').modal('hide');
+    });
+  });
 </script>

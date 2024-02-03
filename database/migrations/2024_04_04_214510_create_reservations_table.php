@@ -14,6 +14,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('trip_id')->constrained('trips');
+            $table->integer('places_reservees');
             $table->timestamps();
         });
         Schema::enableForeignkeyConstraints();
