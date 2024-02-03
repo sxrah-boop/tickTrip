@@ -12,19 +12,20 @@
         <!-- search bar-->
         <div class="mt-4 bg-light " style="margin-bottom: 4rem;">
             <form class="row g-3 bg-light pb-4 rounded-2 px-3" method="POST" action="{{ route('search-trip') }}">
+                @csrf
                 <div class="col-md-3">
-                    <label for="inputLocation" class="form-label">From</label>
+                    <label for="inputLocation" class="form-label">De</label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="inputLocation" placeholder="Location"
-                            aria-label="Départ" name="depart">
+                            aria-label="Départ" name="depart" required>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <label for="inputDestination" class="form-label">
-                        to</label>
+                        à</label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="inputDestination" placeholder="Destination"
-                            aria-label="Destination" name="destination">
+                            aria-label="Destination" name="destination" required>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -163,14 +164,13 @@
                         <div class="d-flex align-items-center">
                             <i class="bi bi-people-fill me-2"></i> ${trip.trip.places_disponibles}
                         </div>
-                        
+
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal ${trip.trip.id}"> Reserver
                      </button>
-   
+
 
                     </div>
                 </div>
-                
             `;
             tripCardsContainer.append(cardHtml); // Append trip card to container
         });

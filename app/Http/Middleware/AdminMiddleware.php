@@ -4,8 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use App\Http\Controllers\UsersTableController;
-use App\Http\Controllers\CustomAuth;
 
 class AdminMiddleware
 {
@@ -17,9 +15,12 @@ class AdminMiddleware
             if ($request->user()->isAdmin()) {
                 return $next($request);
             }
+            // If the user is not an admin, allow them to proceed without redirection
+            return $next($request);
         }
 
-        // If the user is not authenticated or not an admin, redirect them to the home page
-        return redirect('/')->with('error', 'You do not have permission to access the dashboard.');
+        // If the user is not authenticated, allow them to proceed
+        return $next($request);
     }
 }
+

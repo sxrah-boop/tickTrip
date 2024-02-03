@@ -197,20 +197,14 @@ class TripsController extends Controller
 
             $trips = $trips->get();
 
-            /*$trips = Trip::where('depart', 'like', "%$depart%")
-                ->where('destination', 'like', "%$destination%")
-                ->where('date', '=', $date)
-                ->where('places_disponibles', '>=', $places_disponibles)
-                ->get();*/
-
-            // Vérifiez s'il y a des résultats
-            if ($trips->isEmpty()) {
-                // Aucun résultat trouvé, redirigez ou affichez un message
-                return redirect()->route('home')->with('warning', 'Aucun trajet trouvé.');
-            }
-
+            $searchData = [
+                'depart' => $depart,
+                'destination' => $destination,
+                'datetime' => $datetime,
+                'places_disponibles' => $places_disponibles,
+            ];
             // Passez les résultats à la vue de résultats de recherche
-            return view('trips.search-results', compact('trips'));
+            return view('trips.search-results', compact('trips'), compact('searchData'));
     }
 
 
