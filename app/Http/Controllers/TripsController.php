@@ -74,6 +74,11 @@ class TripsController extends Controller
         return view('trips.update', compact('trip'));
     }
 
+    public function searchPage()
+    {
+        return view('trips.search');
+    }
+
 
     public function update(Request $request, $id)
     {
@@ -169,8 +174,8 @@ class TripsController extends Controller
     }
 
 
-        public function search(Request $request)
-        {
+    public function search(Request $request)
+    {
             // Récupérez les données de recherche depuis la requête
             $depart = $request->input('depart');
             $destination = $request->input('destination');
@@ -206,7 +211,8 @@ class TripsController extends Controller
 
             // Passez les résultats à la vue de résultats de recherche
             return view('trips.search-results', compact('trips'));
-        }
+    }
+
 
 
 }
