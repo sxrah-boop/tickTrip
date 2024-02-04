@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Trip;
 use GuzzleHttp\Client;
+use Auth;
 
 
 use Illuminate\Http\Request;
@@ -186,6 +187,7 @@ class TripsController extends Controller
             // Mettez en œuvre la logique de recherche ici, par exemple :
             $trips = Trip::where('depart', 'like', "%$depart%")
                      ->where('destination', 'like', "%$destination%");
+    
 
                    // if ($datetime) {
                                 // $trips->where('datetime', '=', $datetime);
@@ -206,7 +208,15 @@ class TripsController extends Controller
             // Passez les résultats à la vue de résultats de recherche
             return view('trips.search-results', compact('trips'), compact('searchData'));
     }
+    public function afficherMesTrajets()
+    {
+        
+        $trips = Trip::select('id', 'user_id', 'depart', 'destination', 'updated_at','heure_depart','places_disponibles','prix')
+                                    ->where('user_id', Auth::id())
+                                    ->get();
 
+        return view('mytrips', ['trips' => $trips]);
+    }
 
 
 }

@@ -90,7 +90,7 @@
                         <ul class="dropdown-menu" aria-labelledby="profileDropdown">
                             <li><a class="dropdown-item" href="{{ route('profile.showProfile') }}">My Profile</a></li>
                             <li><a class="dropdown-item" href="{{ route('myreservations.afficherMesReservations') }}">My Reservations</a></li>
-                            
+                            <li><a class="dropdown-item" href="{{ route('mytrips.afficherMesTrajets') }}">My trips</a></li>
                             
                             
                             @if(Auth::user()->role_id == 1) 

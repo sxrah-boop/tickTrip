@@ -63,6 +63,8 @@ Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile
 // User reservation Route
 Route::get('/myreservations', [ReservationController::class, 'afficherMesReservations'])->name('myreservations.afficherMesReservations');
 
+// User trip Route
+Route::get('/mytrips', [TripsController::class, 'afficherMesTrajets'])->name('mytrips.afficherMesTrajets');
 // Root URL Redirect to Home
 Route::redirect('/', '/home');
 
