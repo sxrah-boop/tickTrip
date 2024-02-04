@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Reservation;
 use App\Models\Trip;
 use Illuminate\Http\Request;
+//use Illuminate\Support\Facades\Auth;
+use Auth;
 
 
 class ReservationController extends Controller
@@ -32,6 +34,16 @@ class ReservationController extends Controller
         // 6. Rediriger avec un message de réussite
         return response()->json(['message' => 'Réservation effectuée avec succès.'], 200);
 
+    }
+
+    public function afficherMesReservations()
+    {
+        
+        $reservations = Reservation::select('id', 'user_id', 'trip_id', 'created_at', 'updated_at')
+                                    ->where('user_id', Auth::id())
+                                    ->get();
+
+        return view('myreservations', ['reservations' => $reservations]);
     }
 }
 
