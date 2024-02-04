@@ -65,9 +65,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <label for="placesInput">Nombre de places</label>
                 <input type="number" id="placesInput" class="form-control" placeholder="Nombre de places"
-                    min="1">
+                    min="1" value="1">
             </div>
+            <div id="reservationMessages"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                 <button type="button" class="btn btn-primary" id="reserveBtn" onclick="reserver()">Valider</button>
@@ -195,27 +197,32 @@
         });
     }
 
-    function reserver() {
-    var places = $('#placesInput').val(); // Get the number of places from the input field
-    var tripId = $('#reservationModal').data('trip-id'); // Get the trip ID from the modal data attribute
+    function reserver(){
+        let places_reservees = $('#placesInput').val(); // Get the number of places from the input field
+        let tripId = $('#reserveBtn').data('trip-id'); // Get the trip ID from the modal data attribute
 
-    // Send a reservation request to the server
-    $.ajax({
-      url: '/reserver/' + tripId, // URL for the reservation endpoint
-      method: 'POST',
-      data: { places: places }, // Data to send in the request (number of places)
-      success: function(response) {
-        // Handle successful reservation
-        console.log('Reservation successful:', response);
-        $('#reservationMessages').html('<div class="alert alert-success" role="alert">Reservation successful!</div>');
-        $('#reservationModal').modal('hide'); // Hide the modal after successful reservation
-      },
-      error: function(xhr, status, error) {
-        // Handle reservation error
-        console.error('Error occurred during reservation:', error);
-        $('#reservationMessages').html('<div class="alert alert-danger" role="alert">Error occurred during reservation. Please try again later.</div>');
-      }
-    });
+        // Send a reservation request to the server
+        $.ajax({
+        url: '/reserver/' + tripId, // URL for the reservation endpoint
+        method: 'POST',
+        data: { places_reservees: places_reservees }, // Data to send in the request (number of places)
+        success: function(response) {
+            // Handle successful reservation
+            console.log('Reservation successful:', response);
+            $('#reservationMessages').html('<div class="alert alert-success" role="alert">' + response.message + '</div>');
+            // Refresh the page after a delay
+            setTimeout(function() {
+                $('#reservationModal').modal('hide');
+                window.location.reload();
+            }, 3000); // Refresh after 2 seconds (adjust as needed)
+        },
+        error: function(xhr, status, error) {
+            // Handle reservation error
+            console.error('Error occurred during reservation:', error);
+            let errorMessage = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : 'Error occurred during reservation. Please try again later.';
+            $('#reservationMessages').html('<div class="alert alert-danger" role="alert">' + errorMessage + '</div>');
+        }
+        });
   }
 
     // Handle reservation modal
@@ -225,7 +232,7 @@
       let button = $(event.relatedTarget); // Button that triggered the modal
       let tripId = button.data('trip-id'); // Extract trip ID from data-* attributes
       let modal = $(this);
-      modal.find('.modal-title').text('Combien de places voulez-vous réserver pour ce voyage ?');
+      modal.find('#reserveBtn').data('trip-id', tripId);
     });
 
     // Handle reservation button click
