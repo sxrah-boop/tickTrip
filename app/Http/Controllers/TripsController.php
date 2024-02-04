@@ -17,7 +17,7 @@ class TripsController extends Controller
     {
         return view('trips.index');
     }
-    
+
 
     public function create()
     {
@@ -131,8 +131,7 @@ class TripsController extends Controller
         $latitude = $request->latitude;
         $longitude = $request->longitude;
 
-        // Get all trips from the database
-        $trips = Trip::all();
+        $trips = Trip::where('places_disponibles', '>', 0)->get();
 
         // Calculate distance between user's location and each trip's location
         $tripsWithDistance = [];
@@ -179,15 +178,16 @@ class TripsController extends Controller
     public function search(Request $request)
     {
             // Récupérez les données de recherche depuis la requête
-            $depart = $request->input('depart');
-            $destination = $request->input('destination');
-            $datetime = $request->input('datetime');
+            $depart = $request->depart;
+            $destination = $request->destination;
+            $datetime = $request->datetime;
             $places_disponibles = $request->input('places_disponibles');
 
             // Mettez en œuvre la logique de recherche ici, par exemple :
             $trips = Trip::where('depart', 'like', "%$depart%")
-                     ->where('destination', 'like', "%$destination%");
-    
+                     ->where('destination', 'like', "%$destination%")
+                     ->whereDate('heure_depart', '=', date('Y-m-d', strtotime($datetime)))
+                     ->where('places_disponibles', '>', 0);
 
                    // if ($datetime) {
                                 // $trips->where('datetime', '=', $datetime);
