@@ -59,6 +59,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 // User Profile Route
 Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile.showProfile');
+//Route::view('/myreservations', 'myreservations');
+// User reservation Route
+Route::get('/myreservations', [ReservationController::class, 'afficherMesReservations'])->name('myreservations.afficherMesReservations');
 
 // Root URL Redirect to Home
 Route::redirect('/', '/home');
@@ -68,3 +71,4 @@ Route::post('/reserver/{tripId}', [ReservationController::class, 'reserver'])->m
 
 // update user
 Route::patch('/update-user/{userId}', [UsersTableController::class, 'updateUser'])->name('update-user');
+

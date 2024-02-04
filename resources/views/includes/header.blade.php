@@ -89,7 +89,10 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="profileDropdown">
                             <li><a class="dropdown-item" href="{{ route('profile.showProfile') }}">My Profile</a></li>
-                            <li><a class="dropdown-item" href="#">My Reservations</a></li>
+                            <li><a class="dropdown-item" href="{{ route('myreservations.afficherMesReservations') }}">My Reservations</a></li>
+                            
+                            
+                            
                             @if(Auth::user()->role_id == 1) 
             <li><a class="dropdown-item" href="{{ route('dashboard') }}">Admin Dashboard</a></li>
         @endif

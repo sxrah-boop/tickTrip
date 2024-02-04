@@ -50,4 +50,19 @@ class ProfileController extends Controller
         return redirect()->route('profile.show')->with('success', 'Profile updated successfully!');
         // Redirect back to the profile page with a success message
     }
+    
+   /* public function showMyReservations()
+    {
+        $user = Auth::user(); // Get the authenticated user
+
+        return view('profile'); // Pass the user to the 'profile' view
+    }*/
+
+
+
+
+
+
+
+
 }
