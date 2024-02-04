@@ -185,8 +185,7 @@ class TripsController extends Controller
 
             // Mettez en œuvre la logique de recherche ici, par exemple :
             $trips = Trip::where('depart', 'like', "%$depart%")
-                     ->where('destination', 'like', "%$destination%")
-                     ->where('heure_depart', '=', $datetime);
+                     ->where('destination', 'like', "%$destination%");
 
                    // if ($datetime) {
                                 // $trips->where('datetime', '=', $datetime);
