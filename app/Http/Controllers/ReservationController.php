@@ -16,22 +16,24 @@ class ReservationController extends Controller
         // 1. Vérifier si le trip existe
         $trip = Trip::findOrFail($tripId);
 
-        // 2. Vérifier si le nombre de places disponibles est inferieur à 0
-        if ($trip->places_disponibles <= 0) {
-            return redirect()->back()->with('message', 'Désolé, il n\'y a plus de places disponibles pour ce voyage.');
+        // 3. Vérifier si le nombre de places demandées est disponible
+        $placesRequested = $request->places_reservees;
+        if ($placesRequested > $trip->places_disponibles) {
+            return response()->json(['message' => 'Désolé, le nombre de places demandées est supérieur au nombre de places disponibles.'], 400);
         }
-
-        // 3. Créer une nouvelle réservation
+        // 4. Créer une nouvelle réservation
         $reservation = new Reservation();
         $reservation->user_id = auth()->user()->id;
         $reservation->trip_id = $tripId;
+        $reservation->places_reservees = $placesRequested; // Save the number of places in the reservation
         $reservation->save();
 
-        // 4. Décrémenter le nombre de places disponibles
-        $trip->decrement('places_disponibles');
+        // 5. Décrémenter le nombre de places disponibles
+        $trip->decrement('places_disponibles', $placesRequested);
 
-        // 5. Rediriger avec un message de réussite
-        return redirect()->back()->with('message', 'Réservation effectuée avec succès.');
+        // 6. Rediriger avec un message de réussite
+        return response()->json(['message' => 'Réservation effectuée avec succès.'], 200);
+
     }
 
     public function afficherMesReservations()
